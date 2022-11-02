@@ -1,0 +1,12 @@
+{
+	"telegram_token": "YOU_TELEGRAM_TOKEN",
+	"admin_nicknames": "maxdao,ivanfo",
+	"account1": {
+		"API_KEY": "KEY1",
+		"API_SECRET": "SECRET1"
+	},
+	"account2": {
+		"API_KEY": "KEY2",
+		"API_SECRET": "SECRET2"
+	}
+}

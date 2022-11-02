@@ -154,7 +154,8 @@ def message_reply(message):
 			if orders["success"]:
 				msg = "Ордера Account1:\n"
 				for order in orders["items"]:
-					msg += str(order["orderId"] + ". " + order["market"] + " " + order["side"] + " " + str(order["amount"]) + "/" + str(order["left"]) + " by " + str(order["price"])) + "\n"
+					print(order)
+					msg += str(order["orderId"]) + ". " + order["market"] + " " + order["side"] + " " + order["amount"] + "/" + order["left"] + " by " + order["price"] + "\n"
 			else:
 				msg = "Ошибка при получении списка ордеров"
 			tg_bot.send_message(message.chat.id, msg, reply_markup=menu_markup())
@@ -164,7 +165,7 @@ def message_reply(message):
 			if orders["success"]:
 				msg = "Ордера Account2:\n"
 				for order in orders["items"]:
-					msg += str(order["orderId"] + ". " + order["market"] + " " + order["side"] + " " + str(order["amount"]) + "/" + str(order["left"]) + " by " + str(order["price"])) + "\n"
+					msg += str(order["orderId"]) + ". " + order["market"] + " " + order["side"] + " " + order["amount"] + "/" + order["left"] + " by " + order["price"] + "\n"
 			else:
 				msg = "Ошибка при получении списка ордеров"
 			tg_bot.send_message(message.chat.id, msg, reply_markup=menu_markup())

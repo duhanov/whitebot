@@ -73,14 +73,23 @@ class Whitebit:
             return {"success": True, "item": r.json()}
         else:
             print(r.text)
-            return {"success": False, "message": str(r.status_code)}
+            return {"success": False, "message": str(r.status_code) + " " + r.text}
+
+    #Удалить ордер
+    def cancelOrder(self, pairName, orderId):
+        r = self.post("/api/v4/order/cancel", {"market": pairName, "orderId": orderId})
+        if r.status_code == 200:
+            return {"success": True, "result": r.json()}
+        else:
+            return {"success": False, "message": str(r.status_code) + " " + r.text}
+            return False
 
     def getMyOrders(self, pairName):
         r = self.post("/api/v4/orders", {"market": pairName})
         if r.status_code == 200:
             return {"success": True, "items": r.json()}
         else:
-            return {"success": False, "message": str(r.status_code)}
+            return {"success": False, "message": str(r.status_code) + " " + r.text}
             return False
         
 

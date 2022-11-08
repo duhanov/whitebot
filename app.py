@@ -119,7 +119,7 @@ def start_message(message):
 	#Для админов
 
 
-	if message.from_user.username in admins:
+	if message.from_user.username.lower() in admins:
 		tg_bot.send_message(message.chat.id,'Приветствую, @' + message.from_user.username,reply_markup=menu_markup())
 
 

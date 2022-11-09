@@ -119,6 +119,7 @@ def start_message(message):
 	#Для админов
 
 
+	print("/start @" + message.from_user.username)
 	if message.from_user.username.lower() in admins:
 		tg_bot.send_message(message.chat.id,'Приветствую, @' + message.from_user.username,reply_markup=menu_markup())
 
@@ -579,7 +580,7 @@ def message_reply(message):
 	print("message_reply()")
 	print("menu_position=" + menu_position)
 	#Только для админов
-	if message.from_user.username in admins:
+	if message.from_user.username.lower() in admins:
 		#Сохраняем админский чат
 		if not message.chat.id in chats:
 			chats.append(message.chat.id)

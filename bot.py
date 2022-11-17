@@ -281,7 +281,7 @@ class Bot:
             print("price_delta2=" + str(price_delta2))
 
 
-        #Создаем дейтвие
+        #Создаем торговые дейтвия
         n = 0
         for count_tokens in self.orderAmounts:
             #TRADE!!!!!!
@@ -289,11 +289,8 @@ class Bot:
 
             #Второе действие если есть
             if self.mode in ["1->2", "2->1", "1<-2", "2<-1"]:
-                if n < len(self.buyTimes):
-                    #Пауза
-                    text += self.addTrade([acc2, "sleep", self.buyTimes[n]])
+                #Торги второго шага
                 if n < len(self.orderAmounts2):
-                    #Торги второго шага
                     count_tokens2 = self.orderAmounts2[n]
                     text += self.addTrade([acc2, self.what("buy", "sell"), count_tokens2, round(price2,5)])
 
@@ -303,6 +300,10 @@ class Bot:
                     else:
                     #Вначале покупка потом продажа
                         price2 = price2 - price_delta2
+                #Пауза
+                if n < len(self.buyTimes):
+                    #Пауза
+                    text += self.addTrade([acc2, "sleep", self.buyTimes[n]])
             
             #Next trade
             n+=1

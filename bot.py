@@ -236,6 +236,9 @@ class Bot:
         print("addTrade complete")
         return self.tradePlanItemText(len(self.trade_actions), trade)
 
+    def backMode(self):
+        return self.mode in ["1<-2", "2<-1"]
+
     #Для отладки - предполагаемые шаги
     def workPreviewText(self):
         self.trade_actions = []
@@ -270,7 +273,7 @@ class Bot:
             #text += "\nШаг 2. " + acc2 + ". " + self.what("выкуп", "продажа") + " токенов\n"
             price_delta2 = (minmax[1] - minmax[0])/(len(self.orderAmounts2)-1)
             #Вначале продажа потом покупка
-            if self.mode in ["1<-2", "2<-1"]:
+            if self.backMode():
                 print("start_price min for 2th step")
                 price = minmax[1]
                 price2 = minmax[1]
@@ -299,10 +302,10 @@ class Bot:
                     text += self.addTrade([acc2, self.what("buy", "sell"), count_tokens2, round(price2,5)])
 
                     #Вначале продажа потом покупка
-                    if self.mode in ["1<-2", "2<-1"]:
-                        price2 = price2 - price_delta2
-                    else:
+                    if self.backMode():
                         price2 = price2 + price_delta2
+                    else:
+                        price2 = price2 - price_delta2
                     #Вначале покупка потом продажа
                     #price2 = price2 + price_delta2
                 #Пауза
@@ -313,7 +316,7 @@ class Bot:
             #Next trade
             n+=1
  
-            if self.mode in ["1->2", "2->1"]:
+            if self.backMode():
                 price = price + price_delta
             else:
                 #Вначале покупка потом продажа

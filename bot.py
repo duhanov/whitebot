@@ -301,11 +301,11 @@ class Bot:
                     count_tokens2 = self.orderAmounts2[n]
                     text += self.addTrade([acc2, self.what("buy", "sell"), count_tokens2, round(price2,5)])
 
-                    #Вначале продажа потом покупка
+                    #Обратный порядок цен
                     if self.backMode():
-                        price2 = price2 + price_delta2
-                    else:
                         price2 = price2 - price_delta2
+                    else:
+                        price2 = price2 + price_delta2
                     #Вначале покупка потом продажа
                     #price2 = price2 + price_delta2
                 #Пауза
@@ -315,12 +315,12 @@ class Bot:
             
             #Next trade
             n+=1
- 
+
+            #Обратный порядок цен
             if self.backMode():
-                price = price + price_delta
-            else:
-                #Вначале покупка потом продажа
                 price = price - price_delta
+            else:
+                price = price + price_delta
  
             #price = price + price_delta
 

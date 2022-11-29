@@ -270,15 +270,15 @@ class Bot:
             #text += "\nШаг 2. " + acc2 + ". " + self.what("выкуп", "продажа") + " токенов\n"
             price_delta2 = (minmax[1] - minmax[0])/(len(self.orderAmounts2)-1)
             #Вначале продажа потом покупка
-            if self.mode in ["1->2", "2->1"]:
+            if self.mode in ["1<-2", "2<-1"]:
                 print("start_price min for 2th step")
-                price = minmax[0]
-                price2 = minmax[0]
+                price = minmax[1]
+                price2 = minmax[1]
+#                price = minmax[0]
+#                price2 = minmax[0]
             #Вначале покупка потом продажа
             else:
                 print("start_price max for 2th step")
-                price = minmax[1]
-                price2 = minmax[1]
 
             #price2 = minmax[0]
             print("start_price2=" + str(price2))
@@ -299,11 +299,11 @@ class Bot:
                     text += self.addTrade([acc2, self.what("buy", "sell"), count_tokens2, round(price2,5)])
 
                     #Вначале продажа потом покупка
-                    if self.mode in ["1->2", "2->1"]:
-                        price2 = price2 + price_delta2
-                    else:
-                    #Вначале покупка потом продажа
+                    if self.mode in ["1<-2", "2<-1"]:
                         price2 = price2 - price_delta2
+                    else:
+                        price2 = price2 + price_delta2
+                    #Вначале покупка потом продажа
                     #price2 = price2 + price_delta2
                 #Пауза
                 if n < len(self.buyTimes):

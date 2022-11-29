@@ -318,6 +318,8 @@ class Bot:
 
             #Обратный порядок цен
             if self.backMode():
+                print("backMode")
+                print(str(price_delta))
                 price = price - price_delta
             else:
                 price = price + price_delta

@@ -263,12 +263,12 @@ class Bot:
         #text += "Создание " + str(len(self.orderAmounts)) + " ордеров на " + self.what("продажу", "покупку") + " с ценой " + str(round(minmax[0],5)) + " USD до " + str(round(minmax[1],5)) + " USD\n";
 
         price = minmax[0]
+        price2 = minmax[0]
         price_delta = (minmax[1] - minmax[0])/(len(self.orderAmounts)-1)
         print("price_delta=" + str(price_delta))
 
         #Для второго шага
         price_delta2 = 0
-        price2 = 0
         if self.mode in ["1->2", "2->1", "1<-2", "2<-1"]:
             #text += "\nШаг 2. " + acc2 + ". " + self.what("выкуп", "продажа") + " токенов\n"
             price_delta2 = (minmax[1] - minmax[0])/(len(self.orderAmounts2)-1)
@@ -330,73 +330,6 @@ class Bot:
         print(self.trade_actions)
         return text
 
-
-    #Для отладки - предполагаемые шаги
-    def workPreviewText_old(self):
-        self.trade_actions = []
-
-        if self.mode in ["1->2", "1<-2", "1<-", "1->"]:
-            acc1 = "Account1"
-            acc2 = "Account2"
-        else:
-            acc1 = "Account2"
-            acc2 = "Account1"
-
-        text = "Шаг 1. " + acc1 + ". Ордера на " + self.what("продажу", "покупку") + ".\n"
-        if self.mode in ["1->", "2->", "1<-", "2<-"]:
-            minmax = self.minmax
-            print("manual minmax")
-            print(minmax)
-        else:
-            minmax = self.getMinMaxPrice(self.percents)
-            print("stock minmax")
-            print(minmax)
-
-        text += "Создание " + str(len(self.orderAmounts)) + " ордеров на " + self.what("продажу", "покупку") + " с ценой " + str(round(minmax[0],5)) + " USD до " + str(round(minmax[1],5)) + " USD\n";
-
-        price = minmax[0]
-        price_delta = (minmax[1] - minmax[0])/(len(self.orderAmounts)-1)
-
-        print("price_delta=" + str(price_delta))
-
-        n = 0
-        for count_tokens in self.orderAmounts:
-            self.trade_actions.append([acc1, self.what("sell", "buy"), count_tokens, round(price,5)])
-            n+=1
-            text += str(n) + ". " + str(count_tokens) + " " + self.tokenName + " по " + str(round(price,5)) + " USDT\n"
-            price = price + price_delta
-
-
-        #Второй шаг
-        if self.mode in ["1->2", "2->1", "1<-2", "2<-1"]:
-            text += "\nШаг 2. " + acc2 + ". " + self.what("выкуп", "продажа") + " токенов\n"
-            price_delta = (minmax[1] - minmax[0])/(len(self.orderAmounts2)-1)
-            #Вначале продажа потом покупка
-            if self.mode in ["1->2", "2->1"]:
-                print("start_price min")
-                price = minmax[0]
-            #Вначале покупка потом продажа
-            else:
-                print("start_price max")
-                price = minmax[1]
-            print(price)
-            n = 0
-            for count_tokens in self.orderAmounts2:
-                self.trade_actions.append([acc2, "sleep", self.buyTimes[n]])
-                self.trade_actions.append([acc2, self.what("buy", "sell"), count_tokens, round(price,5)])
-
-                text += str(n+1) + ". Через " + str(self.buyTimes[n]) + " сек " + str(count_tokens) + " " + self.tokenName + " по " + str(round(price,5)) + " USDT\n"
-                #Вначале продажа потом покупка
-                if self.mode in ["1->2", "2->1"]:
-                    price = price + price_delta
-                else:
-                #Вначале покупка потом продажа
-                    price = price - price_delta
-
-                n += 1
-
-        print(self.trade_actions)
-        return text
 
 
 

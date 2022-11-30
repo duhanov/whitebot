@@ -774,6 +774,8 @@ def message_reply(message):
 						send2chats(str(n) + "/" + str(len(bot.trade_actions)) + ". " + action[0] + ". Создан ордер на " + a_title[action[1]] + " #" + str(item["orderId"]) + " (" + str(count_tokens) + " " + bot.tokenName + " по цене " + str(round(price,5)) + " USDT)")
 					else:
 						send2chats(str(n) + "/" + str(len(bot.trade_actions)) + ". " + action[1] + ". Ошибка при содании ордера на " + a_title[action[1]])
+						print("error:")
+						print(res["message"])
 						send2chats(res["message"])
 			bot.trade_actions = []
 			menu_position = ""

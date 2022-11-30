@@ -214,7 +214,7 @@ class Bot:
 
 
     def tradePlan(self):
-        workPreviewText(self)
+        return self.workPreviewText()
 
 
     #Текстовое отображение плана (номер,действие)

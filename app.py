@@ -483,6 +483,29 @@ def showOrders(message):
 	
 	tg_bot.send_message(message.chat.id, msg, reply_markup=menu_markup())
 
+
+#Отправка сообщений в чат
+def tg_send(chat_id, msg):
+	global tg_bot
+	#Макс длина строги в тг
+	max_len = 4096
+	text_out = ""
+	for line in msg.split("\n"):
+		#Привысили макс длину - бьем гна подстроки
+		if len(text_out + line) > max_len:
+			part_str = ""
+			for part_line in line.split(", "):
+				if len(text_out + part_line) > max_len:					
+					tg_bot.send_message(chat_id, text_out, reply_markup=menu_markup())
+					text_out = ""
+				else:
+					text_out = text_out + part_line + ", "
+		else:
+			text_out = text_out + line + "\n"
+	if text_out != "":
+		tg_bot.send_message(chat_id, text_out, reply_markup=menu_markup())
+
+
 def node_enter_orders(message):
 	global menu_position
 	global bot
@@ -555,11 +578,12 @@ def node_enter_orders(message):
 		else:
 			menu_position = "enter_orders2"
 			msg = "Через запятую укажите количество токенов для ордеров на " + bot.what("покупку", "продажу")
-		tg_bot.send_message(message.chat.id, msg,reply_markup=menu_markup())
+#		tg_bot.send_message(message.chat.id, msg,reply_markup=menu_markup())
+		tg_send(message.chat.id, msg)
 	#Запоминаем объемы оредров
 	elif menu_position == "enter_orders2/confirm" and message.text == "Да":
 		menu_position = "enter_times"
-		tg_bot.send_message(message.chat.id, "Через запятую укажите время в секундах между " + bot.what("покупками", "продажами"),reply_markup=menu_markup())
+		tg_send(message.chat.id, "Через запятую укажите время в секундах между " + bot.what("покупками", "продажами"))
 	else:
 		r = False
 	
@@ -733,10 +757,10 @@ def message_reply(message):
 			menu_position = "go"
 
 			msg = stock_prices_msg()
-			msg += bot.workPreviewText() + "\n\nНачать торги?"
+			msg += bot.tradePlan() + "\n\nНачать торги?"
 
-
-			tg_bot.send_message(message.chat.id, msg,reply_markup=menu_markup())
+			tg_send(message.chat.id, msg)
+			#tg_bot.send_message(message.chat.id, msg,reply_markup=menu_markup())
 
 		#Начинаем торги
 		elif menu_position == "go" and message.text == "Начать":

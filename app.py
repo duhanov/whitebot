@@ -243,7 +243,7 @@ def node_prices_percent(message, next_menu):
 			minmax = bot.getMinMaxPrice(0)
 
 			max_percent = (minmax[1] - minmax[0])*100 / minmax[0]
-			tg_bot.send_message(message.chat.id, "Введите значение процента меньше " + str(round(delta_percents,5)), reply_markup=menu_markup())
+			tg_bot.send_message(message.chat.id, "Введите значение процента меньше " , reply_markup=menu_markup())
 		else:
 			menu_position = "enter_percent/confirm" 
 			tg_bot.send_message(message.chat.id, "Процент установлен в значение: " + str(bot.percents) + "%.\nОрдера будут установлены в диапазоне: " + str(minmax[0]) + " USDT - " + str(minmax[1]) + " USDT", reply_markup=menu_markup())

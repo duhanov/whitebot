@@ -480,8 +480,8 @@ def showOrders(message):
 		msg += "\n\nОрдера Account2:\n" + account_orders
 	else:
 		msg = "Ошибка при получении списка ордеров"
-	
-	tg_bot.send_message(message.chat.id, msg, reply_markup=menu_markup())
+	tg_send(message.chat.id, msg)
+#	tg_bot.send_message(message.chat.id, msg, reply_markup=menu_markup())
 
 
 #Отправка сообщений в чат
